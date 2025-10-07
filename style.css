@@ -29,8 +29,8 @@ h2{
     text-shadow: -2px 3px 4px #3a6f89;
     }
 main{
-  height: 400px;
-    width: 97%;
+  height: 200px;
+    width: 77%;
     background: rgba(245, 245, 245, 0.788);
     margin: 0 auto;
     margin-top: 245px;
@@ -44,8 +44,8 @@ main{
    border: 2px solid #0e1a1b66;
    border-radius: 10px;
    padding: 10px;
-   margin-top: 40px;
-   min-height: 20px;
+   margin-top: 7px;
+   min-height: 5px;
 }
 .grid-container {
    display: grid;
@@ -71,7 +71,7 @@ grid-template-areas: "i1 i2"
    background: #1d2c37;;
    transition: 0.25s;
    margin-top: px;
-   min-height: 100px;
+   min-height: 50px;
    text-align: center;
    color: white
 }
@@ -88,3 +88,4 @@ h3{
   height: 50px;
   color:rgba(0, 0, 0, 0.807);
 }
+
