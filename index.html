@@ -1,130 +1,47 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> MON REPETTITEUR ONLINE  </title>
-
-    <link rel="stylesheet" href="style.css">
-<link rel="shortcut icon" href="./icon 2.jpg">
-<link rel="manifest" href="manifest.json">
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drop Ton Weh</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#000000">
 
 </head>
 <body>
-    <header>
-        <h1> BIENVENUE CHEZ TON REPETTITEUR ONLINE  </h1>
-    </header>
-    <main>
-        <div class="flexbox">
-        <h2>INSCRIS-TOI !</h2>
-        </div> 
-        
-        <div class="grid">
- <form action="">
-<input type="text" id="fist name" placeholde="Nom">
-<input type="text" id="surname" placeholder="prenom">
-<br>
-<label for="classe"></label>
-      <select id="classe">
 
-<option value="6ème">6ème</option>
-<option value="5ème">5ème</option>
-<option value="4ème">4ème</option>
-<option value="3ème">3ème</option>
-<option value="Seconde C" >Seconde C </option>
-<option value="Seconde A">Seconde A </option>
-<option value="Seconde G1">Seconde G1 (pas encore disponible)</option>
-<option value="Seconde G2">Seconde G2 (pas encore disponible)</option>
-<option value="Première C">Première C </option>
-<option value="Première D">Première D </option>
-<option value="Première A">Première A</option>
-<option value="Première G1">Première G1 (pas encore disponible)</option>
-<option value="Première G2">Première G2 (pas encore disponible)</option>
-<option value="Terminale C">Terminale C</option>
-<option value="Terminale D">Terminale D </option>
-<option value="Terminale A">Terminale A </option>
-<option value="Terminale G1">Terminale G1 (pas encore disponible)</option>
-<option value="Terminale G2">Terminale G2 (pas encore disponible)</option>
+<header>
+  <h1>Drop Ton Weh</h1>
+</header>
 
-<option selected="selected" value="classe">classe</option>
-</textarea>
-<div>
-    <input type="submit" value="VALIDER" id="btn-submit">
-   <a href="https://hgf50.github.io/MPO1.github.io/" id="btn-submit">VALIDER</a> 
-     
-</form></div>
-
-</div>
-
-</div>
-
-
-</div>
-   
-
-</select>
-    </main>
-    <h3>©fait par HGF <br>
-      2025 Côte d'ivoire
-    </h3>
+<main class="products">
+  <div class="card">
+    <img src="https://via.placeholder.com/300">
+    <p>T-shirt Nike</p>
+    <span>5 000 FCFA</span>
   </div>
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js")
-      .then(() => console.log("Service Worker activé"))
-      .catch(error => console.log("Erreur SW :", error));
-  }
-</script>
-<!-- BOÎTE D’INSTALLATION -->
-<div id="install-box" style="
-  display:none;
-  position:fixed;
-  bottom:20px;
-  left:20px;
-  right:20px;
-  background:#000;
-  color:#fff;
-  padding:15px;
-  border-radius:10px;
-  z-index:9999;
-  text-align:center;
-">
-  <p>Installer cette application 📱</p>
-  <button onclick="installApp()" style="padding:10px; width:100%;">
-    Installer
-  </button>
-</div>
 
-<script>
-  // SERVICE WORKER
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-  }
-
-  // INSTALLATION PWA
-  let deferredPrompt;
-
-  window.addEventListener("beforeinstallprompt", function(e) {
-    e.preventDefault();
-    deferredPrompt = e;
-    document.getElementById("install-box").style.display = "block";
-  });
-
-  function installApp() {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      deferredPrompt = null;
-      document.getElementById("install-box").style.display = "none";
-    });
-  }
-</script>
-
-</body>
-
-`
+  <div class="card">
+    <img src="https://via.placeholder.com/300">
+    <p>Chaussures Adidas</p>
+    <span>15 000 FCFA</span>
   </div>
-</footer>
+</main>
+
+<nav class="bottom-nav">
+  <button>🏠</button>
+  <button>🔍</button>
+  <button>➕</button>
+  <button>💬</button>
+  <button>👤</button>
+</nav>
+
+<script src="app.js"></script>
+<button id="installBtn" style="display:none; position:fixed; bottom:80px; left:50%; transform:translateX(-50%);">
+  Installer l'application
+</button>
+
 </body>
 </html>
