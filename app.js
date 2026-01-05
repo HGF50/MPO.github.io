@@ -19,7 +19,7 @@ installBtn.addEventListener("click", () => {
 });
 
 if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-  alert("Sur iPhone : appuie sur Partager puis 'Ajouter à l’écran d’accueil'");
+  alert("Sur iPhone : appuie sur Partager puis 'Ajouter à l’écran d’accueil");
 }
 // ===============================
 // AUTH VIVANTE - Drop Ton Weh
@@ -133,3 +133,4 @@ function logout() {
   localStorage.clear();
   window.location.href = "index.html";
 }
+
