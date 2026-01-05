@@ -1,98 +1,115 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  
+ <!-- AUTH -->
+<div id="authBox" class="auth-box">
+ 
+
+  <form id="registerForm" action="https://formspree.io/f/xgovblyk" method="POST">
+  <input type="email" name="email" id="registerEmail" placeholder="Email" required>
+  <input type="hidden" name="date" id="date">
+  <button type="submit">Créer un compte</button>
+</form>
+
+
+  <!-- champ caché : date -->
+  <input type="hidden" name="date" id="date">
+
+ 
+</form>
+
+
+<!-- UTILISATEUR CONNECTÉ -->
+<div id="userBox" class="user-box">
+  <p>👋 Bienvenue <strong id="userEmail"></strong></p>
+  <button onclick="logout()">Se déconnecter</button>
+</div>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drop Ton Weh</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="/MPO.github.io/manifest.json">
 <meta name="theme-color" content="#000000">
-
-<!-- iOS -->
-<link rel="apple-touch-icon" href="icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 
 </head>
 <body>
-    
 
-<header>
-  <h1>Drop Ton Weh</h1>
-</header>
 
-<main class="products">
-  <div class="card">
-    <img src="https://via.placeholder.com/300">
-    <p>T-shirt Nike</p>
-    <span>5 000 FCFA</span>
+
+
+
+<script src="app.js"></script>
+<script src="auth.js"></script>
+
+
   </div>
-
-  <div class="card">
-    <img src="https://via.placeholder.com/300">
-    <p>Chaussures Adidas</p>
-    <span>15 000 FCFA</span>
-  </div>
-</main>
-
-<nav class="bottom-nav">
-  <button>🏠</button>
-  <button>🔍</button>
-  <button>➕</button>
-  <button>💬</button>
-  <button>👤</button>
-</nav>
-
-<!-- BOUTON INSTALLER -->
-<button id="installBtn" style="
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+      .then(() => console.log("Service Worker activé"))
+      .catch(error => console.log("Erreur SW :", error));
+  }
+</script>
+<!-- BOÎTE D’INSTALLATION -->
+<div id="install-box" style="
   display:none;
   position:fixed;
-  bottom:80px;
-  left:50%;
-  transform:translateX(-50%);
-  padding:12px 20px;
-  border:none;
-  border-radius:25px;
+  bottom:20px;
+  left:20px;
+  right:20px;
   background:#000;
   color:#fff;
-  font-size:16px;
-  z-index:1000;
+  padding:15px;
+  border-radius:10px;
+  z-index:9999;
+  text-align:center;
 ">
-  📲 Installer l’application
+  <p>Installer cette application 📱</p>
+  <button onclick="installApp()" style="padding:10px; width:100%;">
+    Installer
+  </button>
+</div>
+
+<script>
+  // SERVICE WORKER
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+  }
+
+  // INSTALLATION PWA
+  let deferredPrompt;
+
+  window.addEventListener("beforeinstallprompt", function(e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById("install-box").style.display = "block";
+  });
+
+  function installApp() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      deferredPrompt = null;
+      document.getElementById("install-box").style.display = "none";
+    });
+  }
+</script>
+<button id="installBtn"
+style="display:none; position:fixed; bottom:90px; left:50%; transform:translateX(-50%); z-index:999;">
+Installer l’application
 </button>
 
-<!-- Service Worker -->
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/drop-ton-w-h.github.io/sw.js");
-  });
-}
+
+
+
+  <script>
+  document.getElementById("date").value = new Date().toLocaleString();
 </script>
 
-
-<!-- Script installation -->
-<script>
-let deferredPrompt;
-const installBtn = document.getElementById("installBtn");
-
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = "block";
-});
-
-installBtn.addEventListener("click", async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
-  deferredPrompt = null;
-  installBtn.style.display = "none";
-});
 </script>
-    
+
 </body>
-
+</html>
 </html>
