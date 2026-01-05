@@ -1,24 +1,22 @@
 {
-  "name": "Drop Ton W&H",
-  "short_name": "DropW&H",
-  "start_url": "/drop-ton-w-h.github.io/",
-  "scope": "/drop-ton-w-h.github.io/",
+  "name": "Drop Ton Weh",
+  "short_name": "Drop Ton Weh",
+  "start_url": "/MPO.github.io/index.html",
+  "scope": "/MPO.github.io/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
-  "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "/MPO.github.io/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "/MPO.github.io/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
+
