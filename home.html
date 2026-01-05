@@ -5,8 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drop Ton Weh</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="/MPO.github.io/manifest.json">
+  <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
+
+<!-- iOS -->
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 
 </head>
@@ -37,71 +42,33 @@
   <button>💬</button>
   <button>👤</button>
 </nav>
+<button id="installBtn" style="display:none;">Installer l'application</button>
 
 <script src="app.js"></script>
+<script src="auth.js"></script>
 
   </div>
 <script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js")
-      .then(() => console.log("Service Worker activé"))
-      .catch(error => console.log("Erreur SW :", error));
-  }
-</script>
-<!-- BOÎTE D’INSTALLATION -->
-<div id="install-box" style="
-  display:none;
-  position:fixed;
-  bottom:20px;
-  left:20px;
-  right:20px;
-  background:#000;
-  color:#fff;
-  padding:15px;
-  border-radius:10px;
-  z-index:9999;
-  text-align:center;
-">
-  <p>Installer cette application 📱</p>
-  <button onclick="installApp()" style="padding:10px; width:100%;">
-    Installer
-  </button>
-</div>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
 
-<script>
-  // SERVICE WORKER
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-  }
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
 
-  // INSTALLATION PWA
-  let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();  // Empêche l’install automatique
+  deferredPrompt = e;
+  installBtn.style.display = 'block';
+});
 
-  window.addEventListener("beforeinstallprompt", function(e) {
-    e.preventDefault();
-    deferredPrompt = e;
-    document.getElementById("install-box").style.display = "block";
-  });
-
-  function installApp() {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      deferredPrompt = null;
-      document.getElementById("install-box").style.display = "none";
-    });
-  }
-</script>
-<button id="installBtn"
-style="display:none; position:fixed; bottom:90px; left:50%; transform:translateX(-50%); z-index:999;">
-Installer l’application
-</button>
-
-
-
-<script>
-  document.getElementById("date").value =
-    new Date().toLocaleString();
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  installBtn.style.display = 'none';
+});
 </script>
 
 </body>

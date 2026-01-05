@@ -29,13 +29,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drop Ton Weh</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="/MPO.github.io/manifest.json">
+ <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
 
+<!-- iOS -->
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 </head>
 <body>
 
+<!-- BOUTON INSTALL PWA -->
+<button id="installBtn" style="display:none;">Installer l'application</button>
 
 
 
@@ -73,41 +79,26 @@
 </div>
 
 <script>
-  // SERVICE WORKER
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-  }
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
 
-  // INSTALLATION PWA
-  let deferredPrompt;
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
 
-  window.addEventListener("beforeinstallprompt", function(e) {
-    e.preventDefault();
-    deferredPrompt = e;
-    document.getElementById("install-box").style.display = "block";
-  });
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();  // Empêche l’install automatique
+  deferredPrompt = e;
+  installBtn.style.display = 'block';
+});
 
-  function installApp() {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      deferredPrompt = null;
-      document.getElementById("install-box").style.display = "none";
-    });
-  }
-</script>
-<button id="installBtn"
-style="display:none; position:fixed; bottom:90px; left:50%; transform:translateX(-50%); z-index:999;">
-Installer l’application
-</button>
-
-
-
-
-  <script>
-  document.getElementById("date").value = new Date().toLocaleString();
-</script>
-
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  installBtn.style.display = 'none';
+});
 </script>
 
 </body>
