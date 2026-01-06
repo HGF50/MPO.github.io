@@ -1,34 +1,35 @@
+// Connexion simple
 function login() {
   const email = document.getElementById("loginEmail").value;
-
   if (!email.includes("@")) {
     alert("Email invalide");
     return;
   }
-
   localStorage.setItem("user", email);
   localStorage.setItem("loggedIn", "true");
-
   window.location.href = "home.html";
 }
+
+// Inscription
 document.getElementById("registerForm").addEventListener("submit", function(e) {
   const email = document.getElementById("registerEmail").value;
 
   if (!email.includes("@")) {
     alert("Email invalide");
-    e.preventDefault(); // bloque la soumission si email invalide
+    e.preventDefault();
     return;
   }
 
-  // ✅ Sauvegarde connexion auto
+  // Connexion automatique
   localStorage.setItem("user", email);
   localStorage.setItem("loggedIn", "true");
 
-  // ✅ Redirection après 1 seconde pour laisser Formspree envoyer l'email
+  // Laisser Formspree envoyer l'email
   setTimeout(() => {
     window.location.href = "home.html";
-  }, 1000); // 1 seconde d’attente
+  }, 1000);
 });
+
 
 
   // Sauvegarde locale pour connexion auto

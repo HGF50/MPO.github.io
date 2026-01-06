@@ -1,105 +1,82 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
- <!-- AUTH -->
-<div id="authBox" class="auth-box">
- 
-
-  <form id="registerForm" action="https://formspree.io/f/xgovblyk" method="POST">
-  <input type="email" name="email" id="registerEmail" placeholder="Email" required>
-  <input type="hidden" name="date" id="date">
-  <button type="submit">Créer un compte</button>
-</form>
-
-
-  <!-- champ caché : date -->
-  <input type="hidden" name="date" id="date">
-
- 
-</form>
-
-
-<!-- UTILISATEUR CONNECTÉ -->
-<div id="userBox" class="user-box">
-  <p>👋 Bienvenue <strong id="userEmail"></strong></p>
-  <button onclick="logout()">Se déconnecter</button>
-</div>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drop Ton Weh</title>
   <link rel="stylesheet" href="style.css">
- <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#000000">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#000000">
 
-<!-- iOS -->
-<link rel="apple-touch-icon" href="icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
+  <!-- iOS -->
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
 
-<!-- BOUTON INSTALL PWA -->
-<button id="installBtn" style="display:none;">Installer l'application</button>
+  <!-- FORMULAIRE AUTH -->
+  <div id="authBox" class="auth-box">
+    <h2 id="loginTitle">Connexion</h2>
+    <div id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Email">
+      <button onclick="login()">Se connecter</button>
+    </div>
 
+    <hr>
 
-
-
-<script src="app.js"></script>
-<script src="auth.js"></script>
-
-
+    <h2 id="registerTitle">Inscription</h2>
+    <form id="registerForm" action="https://formspree.io/f/TON_ID" method="POST">
+      <input type="email" name="email" id="registerEmail" placeholder="Email" required>
+      <input type="hidden" name="date" id="date">
+      <button type="submit">Créer un compte</button>
+    </form>
   </div>
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js")
-      .then(() => console.log("Service Worker activé"))
-      .catch(error => console.log("Erreur SW :", error));
-  }
-</script>
-<!-- BOÎTE D’INSTALLATION -->
-<div id="install-box" style="
-  display:none;
-  position:fixed;
-  bottom:20px;
-  left:20px;
-  right:20px;
-  background:#000;
-  color:#fff;
-  padding:15px;
-  border-radius:10px;
-  z-index:9999;
-  text-align:center;
-">
-  <p>Installer cette application 📱</p>
-  <button onclick="installApp()" style="padding:10px; width:100%;">
-    Installer
-  </button>
-</div>
 
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
+  <!-- BOÎTE INSTALL PWA -->
+  <div id="install-box" style="display:none;position:fixed;bottom:20px;left:20px;right:20px;background:#000;color:#fff;padding:15px;border-radius:10px;z-index:9999;text-align:center;">
+    <p>Installer cette application 📱</p>
+    <button onclick="installApp()" style="padding:10px; width:100%;">Installer</button>
+  </div>
 
-let deferredPrompt;
-const installBtn = document.getElementById('installBtn');
+  <!-- SCRIPT DATE -->
+  <script>
+    document.getElementById("date").value = new Date().toLocaleString();
+  </script>
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();  // Empêche l’install automatique
-  deferredPrompt = e;
-  installBtn.style.display = 'block';
-});
+  <!-- SCRIPT AUTH -->
+  <script src="auth.js"></script>
 
-installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  deferredPrompt = null;
-  installBtn.style.display = 'none';
-});
-</script>
+  <!-- SERVICE WORKER + PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker activé'))
+        .catch(error => console.log('Erreur SW :', error));
+    }
+
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', function(e) {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('install-box').style.display = 'block';
+    });
+
+    function installApp() {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => {
+        deferredPrompt = null;
+        document.getElementById('install-box').style.display = 'none';
+      });
+    }
+
+    // Cache formulaire si connecté
+    if(localStorage.getItem("loggedIn") === "true") {
+      document.getElementById("authBox").style.display = "none";
+      window.location.href = "home.html";
+    }
+  </script>
 
 </body>
 </html>
