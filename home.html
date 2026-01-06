@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+     <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drop Ton Weh</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+
+<!-- iOS -->
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+
+</head>
+<body>
+
+<header>
+  <h1>Drop Ton Weh</h1>
+</header>
+
+<main class="products">
+  <div class="card">
+    <img src="https://via.placeholder.com/300">
+    <p>T-shirt Nike</p>
+    <span>5 000 FCFA</span>
+  </div>
+
+  <div class="card">
+    <img src="https://via.placeholder.com/300">
+    <p>Chaussures Adidas</p>
+    <span>15 000 FCFA</span>
+  </div>
+</main>
+
+<nav class="bottom-nav">
+  <button>🏠</button>
+  <button>🔍</button>
+  <button>➕</button>
+  <button>💬</button>
+  <button>👤</button>
+</nav>
+<button id="installBtn" style="display:none;">Installer l'application</button>
+
+<script src="app.js"></script>
+<script src="auth.js"></script>
+
+  </div>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();  // Empêche l’install automatique
+  deferredPrompt = e;
+  installBtn.style.display = 'block';
+});
+
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  installBtn.style.display = 'none';
+});
+</script>
+
+</body>
+</html>
