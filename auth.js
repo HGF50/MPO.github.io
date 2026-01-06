@@ -1,52 +1,55 @@
-// Connexion simple
+/* =========================
+   CONNEXION
+========================= */
 function login() {
   const email = document.getElementById("loginEmail").value;
-  if (!email.includes("@")) {
+
+  if (!email || !email.includes("@")) {
     alert("Email invalide");
     return;
   }
-  localStorage.setItem("user", email);
+
   localStorage.setItem("loggedIn", "true");
+  localStorage.setItem("email", email);
+
   window.location.href = "home.html";
 }
 
-// Inscription
-document.getElementById("registerForm").addEventListener("submit", function(e) {
-  const email = document.getElementById("registerEmail").value;
+/* =========================
+   INSCRIPTION
+========================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("registerForm");
+  if (!form) return;
 
-  if (!email.includes("@")) {
-    alert("Email invalide");
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
-    return;
-  }
 
-  // Connexion automatique
-  localStorage.setItem("user", email);
-  localStorage.setItem("loggedIn", "true");
+    const email = document.getElementById("registerEmail").value;
+    const date = new Date().toLocaleString();
 
-  // Laisser Formspree envoyer l'email
-  setTimeout(() => {
-    window.location.href = "home.html";
-  }, 1000);
-});
+    if (!email || !email.includes("@")) {
+      alert("Email invalide");
+      return;
+    }
 
-
-
-  // Sauvegarde locale pour connexion auto
-  localStorage.setItem("user", email);
-  localStorage.setItem("loggedIn", "true");
-
-  // Envoi du formulaire à Formspree via fetch
-  fetch(event.target.action, {
-    method: "POST",
-    body: new FormData(event.target),
-    headers: { "Accept": "application/json" }
-  })
-  .then(() => {
-    // ✅ Redirection immédiate vers la page Articles
-    window.location.href = "home.html";
-  })
-  .catch(() => {
-    alert("Erreur lors de l'inscription");
+    fetch("https://formspree.io/f/xgovblyk", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, date })
+    })
+    .then(() => {
+      localStorage.setItem("loggedIn", "true");
+      localStorage.setItem("email", email);
+      window.location.href = "home.html";
+    })
+    .catch(() => {
+      alert("Erreur lors de l'inscription");
+    });
   });
-
+});
+function logout() {
+  localStorage.removeItem("loggedIn");
+  localStorage.removeItem("email");
+  window.location.href = "index.html";
+}

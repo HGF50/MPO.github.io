@@ -1,47 +1,20 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-     <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drop Ton Weh</title>
+
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#000000">
 
-<!-- iOS -->
-<link rel="apple-touch-icon" href="icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-
+  <!-- iOS -->
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
-<!-- FORMULAIRE AUTH -->
-  <div id="authBox" class="auth-box">
-    <h2 id="loginTitle">Connexion</h2>
-    <div id="loginForm">
-      <input type="email" id="loginEmail" placeholder="Email">
-      <button onclick="login()">Se connecter</button>
-    </div>
-
-    <hr>
-
-    <h2 id="registerTitle">Inscription</h2>
-    <form id="registerForm" action="https://formspree.io/f/xgovblyk" method="POST">
-      <input type="email" name="email" id="registerEmail" placeholder="Email" required>
-      <input type="hidden" name="date" id="date">
-      <button type="submit">Créer un compte</button>
-    </form>
-  </div>
-
-  
-  <!-- SCRIPT DATE -->
-  <script>
-    document.getElementById("date").value = new Date().toLocaleString();
-  </script>
-
-  <!-- SCRIPT AUTH -->
-  <script src="auth.js"></script>
 
 <header>
   <h1>Drop Ton Weh</h1>
@@ -68,22 +41,36 @@
   <button>💬</button>
   <button>👤</button>
 </nav>
-<button id="installBtn" style="display:none;">Installer l'application</button>
+
+<!-- BOUTON INSTALL PWA -->
+<button id="installBtn" style="display:none; position:fixed; bottom:80px; right:20px;">
+  Installer l'application
+</button>
+<button onclick="logout()">Se déconnecter</button>
+
 
 <script src="app.js"></script>
 <script src="auth.js"></script>
-
-  </div>
 <script>
+  if (localStorage.getItem("loggedIn") !== "true") {
+    window.location.href = "index.html";
+  }
+</script>
+
+
+<script>
+/* 🔐 PROTECTION : bloquer si non connecté *
+/* 📦 SERVICE WORKER */
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
 }
 
+/* 📲 INSTALLATION PWA */
 let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
 
 window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();  // Empêche l’install automatique
+  e.preventDefault();
   deferredPrompt = e;
   installBtn.style.display = 'block';
 });
@@ -91,7 +78,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 installBtn.addEventListener('click', async () => {
   if (!deferredPrompt) return;
   deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
+  await deferredPrompt.userChoice;
   deferredPrompt = null;
   installBtn.style.display = 'none';
 });
