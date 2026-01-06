@@ -48,8 +48,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
-function logout() {
-  localStorage.removeItem("loggedIn");
-  localStorage.removeItem("email");
-  window.location.href = "index.html";
-}
+

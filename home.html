@@ -46,16 +46,11 @@
 <button id="installBtn" style="display:none; position:fixed; bottom:80px; right:20px;">
   Installer l'application
 </button>
-<button onclick="logout()">Se déconnecter</button>
+
 
 
 <script src="app.js"></script>
 <script src="auth.js"></script>
-<script>
-  if (localStorage.getItem("loggedIn") !== "true") {
-    window.location.href = "index.html";
-  }
-</script>
 
 
 <script>
