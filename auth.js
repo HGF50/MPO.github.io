@@ -1,22 +1,4 @@
-// INSCRIPTION UNIQUE
-document.getElementById("registerForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  const email = document.getElementById("registerEmail").value;
-  if (!email.includes("@")) {
-    alert("Email invalide");
-    return;
-  }
-
-  // Sauvegarde locale
-  localStorage.setItem("registeredEmail", email);
-  localStorage.setItem("loggedIn", "true");
-
-  // Redirection vers les articles
-  window.location.href = "home.html";
-});
-// INSCRIPTION UNIQUE (connexion persistante)
-document.getElementById("registerForm").addEventListener("submit", function(e) {
+document.getElementById("registerForm")?.addEventListener("submit", function(e) {
   e.preventDefault();
 
   const email = document.getElementById("registerEmail").value;
@@ -26,11 +8,10 @@ document.getElementById("registerForm").addEventListener("submit", function(e) {
     return;
   }
 
-  // 🔒 Sauvegarde PERSISTANTE
+  // Connexion persistante
   localStorage.setItem("loggedIn", "true");
-  localStorage.setItem("userEmail", email);
-  localStorage.setItem("registerDate", new Date().toISOString());
+  localStorage.setItem("email", email);
 
-  // ➡️ Redirection directe vers les articles
+  // Aller aux articles
   window.location.href = "home.html";
 });

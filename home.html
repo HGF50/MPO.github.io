@@ -15,12 +15,13 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
+  
   <script>
-  // 🔁 Connexion auto permanente
   if (localStorage.getItem("loggedIn") !== "true") {
     window.location.href = "index.html";
   }
 </script>
+
 
 <script>
   if (localStorage.getItem("loggedIn") !== "true") {
@@ -62,7 +63,6 @@
 
 
 
-<!-- BOUTON INSTALL -->
 <button id="installBtn" style="
   display:none;
   position:fixed;
@@ -70,10 +70,10 @@
   left:20px;
   right:20px;
   padding:15px;
-  font-size:16px;
 ">
   Installer l’application 📱
 </button>
+
 <script>
 let deferredPrompt;
 const installBtn = document.getElementById("installBtn");
@@ -88,7 +88,6 @@ installBtn.addEventListener("click", async () => {
   if (!deferredPrompt) return;
   deferredPrompt.prompt();
   await deferredPrompt.userChoice;
-  deferredPrompt = null;
   installBtn.style.display = "none";
 });
 </script>
