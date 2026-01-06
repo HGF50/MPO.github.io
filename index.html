@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Drop Ton Weh</title>
+  <title>Inscription – Drop Ton Weh</title>
+
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#000000">
@@ -11,64 +12,26 @@
   <!-- iOS -->
   <link rel="apple-touch-icon" href="icon-192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
 
-  <!-- FORMULAIRE AUTH -->
-  <div id="authBox" class="auth-box">
-    <h2 id="loginTitle">Connexion</h2>
-    <div id="loginForm">
-      <input type="email" id="loginEmail" placeholder="Email">
-      <button onclick="login()">Se connecter</button>
-    </div>
+  <!-- INSCRIPTION -->
+  <div class="auth-box">
+    <h2>Créer un compte</h2>
 
-    <hr>
-
-    <h2 id="registerTitle">Inscription</h2>
-    <form id="registerForm" action="https://formspree.io/f/xgovblyk" method="POST">
-      <input type="email" name="email" id="registerEmail" placeholder="Email" required>
-      <input type="hidden" name="date" id="date">
+    <form id="registerForm">
+      <input type="email" id="registerEmail" placeholder="Email" required>
       <button type="submit">Créer un compte</button>
     </form>
   </div>
 
-  
-  <!-- SCRIPT DATE -->
-  <script>
-    document.getElementById("date").value = new Date().toLocaleString();
-  </script>
-
-  <!-- SCRIPT AUTH -->
-
-  <!-- SERVICE WORKER + PWA -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('Service Worker activé'))
-        .catch(error => console.log('Erreur SW :', error));
-    }
-
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', function(e) {
-      e.preventDefault();
-      deferredPrompt = e;
-      document.getElementById('install-box').style.display = 'block';
-    });
-
-    function installApp() {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(() => {
-        deferredPrompt = null;
-        document.getElementById('install-box').style.display = 'none';
-      });
-    }
-
-  
-  </script>
-
   <script src="auth.js"></script>
-    <script src="app.js"></script>
+  <script>
+  // 🔁 Connexion auto permanente
+  if (localStorage.getItem("loggedIn") !== "true") {
+    window.location.href = "index.html";
+  }
+</script>
+
 </body>
 </html>

@@ -15,6 +15,18 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
+  <script>
+  // 🔁 Connexion auto permanente
+  if (localStorage.getItem("loggedIn") !== "true") {
+    window.location.href = "index.html";
+  }
+</script>
+
+<script>
+  if (localStorage.getItem("loggedIn") !== "true") {
+    window.location.href = "index.html";
+  }
+</script>
 
 <header>
   <h1>Drop Ton Weh</h1>
@@ -42,10 +54,6 @@
   <button>👤</button>
 </nav>
 
-<!-- BOUTON INSTALL PWA -->
-<button id="installBtn" style="display:none; position:fixed; bottom:80px; right:20px;">
-  Installer l'application
-</button>
 
 
 
@@ -53,30 +61,42 @@
 <script src="auth.js"></script>
 
 
+
+<!-- BOUTON INSTALL -->
+<button id="installBtn" style="
+  display:none;
+  position:fixed;
+  bottom:90px;
+  left:20px;
+  right:20px;
+  padding:15px;
+  font-size:16px;
+">
+  Installer l’application 📱
+</button>
 <script>
-/* 🔐 PROTECTION : bloquer si non connecté *
-/* 📦 SERVICE WORKER */
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
-
-/* 📲 INSTALLATION PWA */
 let deferredPrompt;
-const installBtn = document.getElementById('installBtn');
+const installBtn = document.getElementById("installBtn");
 
-window.addEventListener('beforeinstallprompt', (e) => {
+window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  installBtn.style.display = 'block';
+  installBtn.style.display = "block";
 });
 
-installBtn.addEventListener('click', async () => {
+installBtn.addEventListener("click", async () => {
   if (!deferredPrompt) return;
   deferredPrompt.prompt();
   await deferredPrompt.userChoice;
   deferredPrompt = null;
-  installBtn.style.display = 'none';
+  installBtn.style.display = "none";
 });
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
 </script>
 
 </body>

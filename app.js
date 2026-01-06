@@ -43,22 +43,23 @@ function register() {
 }
 
 function login() {
-  const email = emailInput();
-  const password = passwordInput();
+  const email = document.getElementById("loginEmail").value;
+  const savedEmail = localStorage.getItem("registeredEmail");
 
-  if (!email || !password) return;
+  if (!email.includes("@")) {
+    alert("Email invalide");
+    return;
+  }
 
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  if (!user || user.email !== email || user.password !== password) {
-    alert("❌ Email ou mot de passe incorrect");
+  if (email !== savedEmail) {
+    alert("Compte inexistant. Veuillez vous inscrire.");
     return;
   }
 
   localStorage.setItem("loggedIn", "true");
-  animateSuccess("Connexion réussie ✅");
-  showUser(email);
+  window.location.href = "home.html";
 }
+
 
 function logout() {
   localStorage.removeItem("loggedIn");
