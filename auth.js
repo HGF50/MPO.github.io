@@ -1,3 +1,9 @@
+// 🔹 Redirection si déjà inscrit
+if (localStorage.getItem("loggedIn") === "true") {
+  window.location.href = "home.html";
+}
+
+// 🔹 Formulaire inscription
 document.getElementById("registerForm")?.addEventListener("submit", function(e) {
   e.preventDefault();
 
@@ -8,10 +14,11 @@ document.getElementById("registerForm")?.addEventListener("submit", function(e) 
     return;
   }
 
-  // Connexion persistante
+  // 🔒 Sauvegarde persistante
   localStorage.setItem("loggedIn", "true");
   localStorage.setItem("email", email);
+  localStorage.setItem("registerDate", new Date().toISOString());
 
-  // Aller aux articles
+  // 🔄 Redirection vers home
   window.location.href = "home.html";
 });

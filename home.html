@@ -15,88 +15,86 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
-  
+
+  <!-- 🔁 Redirection si pas connecté -->
   <script>
-  if (localStorage.getItem("loggedIn") !== "true") {
-    window.location.href = "index.html";
-  }
-</script>
+    if (localStorage.getItem("loggedIn") !== "true") {
+      window.location.href = "index.html";
+    }
+  </script>
 
+  <header>
+    <h1>Drop Ton Weh</h1>
+  </header>
 
-<script>
-  if (localStorage.getItem("loggedIn") !== "true") {
-    window.location.href = "index.html";
-  }
-</script>
+  <main class="products">
+    <div class="card">
+      <img src="https://via.placeholder.com/300">
+      <p>T-shirt Nike</p>
+      <span>5 000 FCFA</span>
+    </div>
 
-<header>
-  <h1>Drop Ton Weh</h1>
-</header>
+    <div class="card">
+      <img src="https://via.placeholder.com/300">
+      <p>Chaussures Adidas</p>
+      <span>15 000 FCFA</span>
+    </div>
+  </main>
 
-<main class="products">
-  <div class="card">
-    <img src="https://via.placeholder.com/300">
-    <p>T-shirt Nike</p>
-    <span>5 000 FCFA</span>
-  </div>
+  <nav class="bottom-nav">
+    <button>🏠</button>
+    <button>🔍</button>
+    <button>➕</button>
+    <button>💬</button>
+    <button>👤</button>
+  </nav>
 
-  <div class="card">
-    <img src="https://via.placeholder.com/300">
-    <p>Chaussures Adidas</p>
-    <span>15 000 FCFA</span>
-  </div>
-</main>
+  <!-- 🔹 Bouton Installer PWA -->
+  <button id="installBtn" style="
+    display:none;
+    position:fixed;
+    bottom:90px;
+    left:20px;
+    right:20px;
+    padding:15px;
+    border-radius:10px;
+    background:#000;
+    color:#fff;
+    font-size:16px;
+  ">
+    Installer l’application 📱
+  </button>
 
-<nav class="bottom-nav">
-  <button>🏠</button>
-  <button>🔍</button>
-  <button>➕</button>
-  <button>💬</button>
-  <button>👤</button>
-</nav>
+  <!-- 🔹 Scripts -->
+  <script src="app.js"></script>
+  <script src="auth.js"></script>
 
+  <script>
+    // 🔹 PWA : Service Worker
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("Service Worker activé"))
+        .catch(err => console.log("Erreur SW :", err));
+    }
 
+    // 🔹 PWA : Installation
+    let deferredPrompt;
+    const installBtn = document.getElementById("installBtn");
 
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = "block";
+    });
 
-<script src="app.js"></script>
-<script src="auth.js"></script>
-
-
-
-<button id="installBtn" style="
-  display:none;
-  position:fixed;
-  bottom:90px;
-  left:20px;
-  right:20px;
-  padding:15px;
-">
-  Installer l’application 📱
-</button>
-
-<script>
-let deferredPrompt;
-const installBtn = document.getElementById("installBtn");
-
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = "block";
-});
-
-installBtn.addEventListener("click", async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
-  installBtn.style.display = "none";
-});
-</script>
-
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
-}
-</script>
+    installBtn.addEventListener("click", async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      installBtn.style.display = "none";
+      deferredPrompt = null;
+    });
+  </script>
 
 </body>
 </html>
